@@ -3,7 +3,6 @@ package com.mcxtzhang.diffutils;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,55 +48,10 @@ public class DiffAdapter extends RecyclerView.Adapter<DiffAdapter.DiffVH> {
         holder.tv1.setText(bean.getName());
         holder.tv2.setText(bean.getDesc());
         holder.iv.setImageResource(bean.getPic());
-        if (position ==2){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true){
-                        try {
-                            Log.d(TAG, "实验 getAdapterPosition 和 getLayoutPosition 不一样的时候： position = [" + position + "], payloads = ["  + "]");
-                            Log.d(TAG, "实验 getAdapterPosition 和 getLayoutPosition 不一样的时候： holder.getAdapterPosition() = [" + holder.getAdapterPosition() + "], payloads = ["  + "]");
-                            Log.d(TAG, "实验 getAdapterPosition 和 getLayoutPosition 不一样的时候：  holder.getLayoutPosition() = [" + holder.getLayoutPosition() + "], payloads = ["  + "]");
-                            //Log.d(TAG, " holder.getPosition() = [" + holder.getPosition() + "], payloads = ["  + "]");
-                            //Log.d(TAG, "holder.getOldPosition() = [" + holder.getOldPosition() + "], payloads = ["  + "]");
-
-                            Thread.sleep(1);
-
-                        } catch (InterruptedException e) {
-                            Log.e(TAG, "run: error");
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            }).start();
-        }
-
-
-
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "], payloads = ["  + "]");
-                Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getAdapterPosition() = [" + holder.getAdapterPosition() + "], payloads = ["  + "]");
-                Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getLayoutPosition() = [" + holder.getLayoutPosition() + "], payloads = ["  + "]");
-                Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getPosition() = [" + holder.getPosition() + "], payloads = ["  + "]");
-                Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getOldPosition() = [" + holder.getOldPosition() + "], payloads = ["  + "]");
-
-            }
-        });
     }
 
     @Override
     public void onBindViewHolder(DiffVH holder, int position, List<Object> payloads) {
-        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], position = [" + position + "], payloads = ["  + "]");
-        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getAdapterPosition() = [" + holder.getAdapterPosition() + "], payloads = ["  + "]");
-        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getLayoutPosition() = [" + holder.getLayoutPosition() + "], payloads = ["  + "]");
-        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getPosition() = [" + holder.getPosition() + "], payloads = ["  + "]");
-        Log.d(TAG, "onBindViewHolder() called with: holder = [" + holder + "], holder.getOldPosition() = [" + holder.getOldPosition() + "], payloads = ["  + "]");
-
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position);
         } else {

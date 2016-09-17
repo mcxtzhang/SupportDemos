@@ -8,9 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList<TestBean> mDatas;
+    private List<TestBean> mDatas;
     private RecyclerView mRv;
     private DiffAdapter mAdapter;
 
@@ -22,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new DiffAdapter(this, mDatas);
-        //mAdapter.setData(mDatas);
         mRv.setAdapter(mAdapter);
     }
-
 
     private void initData() {
         mDatas = new ArrayList<>();
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         mDatas.add(new TestBean("张旭童5", "手撕测试", R.drawable.pic5));
     }
 
-
     /**
      * 模拟刷新操作
      *
@@ -44,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onRefresh(View view) {
         try {
-            ArrayList<TestBean> newDatas = new ArrayList<>();
+            List<TestBean> newDatas = new ArrayList<>();
             for (TestBean bean : mDatas) {
                 newDatas.add(bean.clone());//clone一遍旧数据 ，模拟刷新操作
             }
