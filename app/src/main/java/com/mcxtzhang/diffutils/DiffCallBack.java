@@ -86,15 +86,6 @@ public class DiffCallBack extends DiffUtil.Callback {
     }
 
     /**
-     * 实现这个方法 就能成为文艺青年中的文艺青年
-     * 定向刷新中的部分更新
-     * 效率最高
-     *
-     * @param oldItemPosition
-     * @param newItemPosition
-     * @return
-     */
-    /**
      * When {@link #areItemsTheSame(int, int)} returns {@code true} for two items and
      * {@link #areContentsTheSame(int, int)} returns false for them, DiffUtil
      * calls this method to get a payload about the change.
@@ -121,6 +112,10 @@ public class DiffCallBack extends DiffUtil.Callback {
     @Nullable
     @Override
     public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+        //实现这个方法 就能成为文艺青年中的文艺青年
+        // 定向刷新中的部分更新
+        // 效率最高
+        //只是没有了ItemChange的白光一闪动画，（反正我也觉得不太重要）
         TestBean oldBean = mOldDatas.get(oldItemPosition);
         TestBean newBean = mNewDatas.get(newItemPosition);
 
@@ -135,6 +130,6 @@ public class DiffCallBack extends DiffUtil.Callback {
 
         if (payload.size() == 0)//如果没有变化 就传空
             return null;
-        return payload;
+        return payload;//
     }
 }

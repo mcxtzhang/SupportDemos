@@ -56,8 +56,8 @@ public class DiffAdapter extends RecyclerView.Adapter<DiffAdapter.DiffVH> {
             onBindViewHolder(holder, position);
         } else {
             //文艺青年中的文青
-            Bundle payload = (Bundle) payloads.get(0);
-            TestBean bean = mDatas.get(position);
+            Bundle payload = (Bundle) payloads.get(0);//取出我们在getChangePayload（）方法返回的bundle
+            TestBean bean = mDatas.get(position);//取出新数据源，（可以不用）
             for (String key : payload.keySet()) {
                 switch (key) {
                     case "KEY_DESC":
