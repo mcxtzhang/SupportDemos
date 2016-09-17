@@ -54,13 +54,15 @@ public class MainActivity extends AppCompatActivity {
             newDatas.add(testBean);
 
             //新宠
+            //利用DiffUtil.calculateDiff()方法，传入一个规则DiffUtil.Callback对象，和是否检测移动item的 boolean变量，得到DiffUtil.DiffResult 的对象
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffCallBack(mDatas, newDatas), true);
+            //利用DiffUtil.DiffResult对象的dispatchUpdatesTo（）方法，传入RecyclerView的Adapter，轻松成为文艺青年
             diffResult.dispatchUpdatesTo(mAdapter);
             //别忘了将新数据给Adapter
             mDatas = newDatas;
             mAdapter.setDatas(mDatas);
 
-            //mAdapter.notifyDataSetChanged();//以前我们只能这样，现在我们有新宠了  ，实验二 验证notifyDataSetChanged getAdapterPosition为-1，也用的上
+            //mAdapter.notifyDataSetChanged();//以前普通青年的我们只能这样，现在我们是文艺青年了，有新宠了
 
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
