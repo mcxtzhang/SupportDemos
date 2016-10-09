@@ -1,3 +1,6 @@
+博文传送门：
+http://blog.csdn.net/zxt0601/article/details/52562770
+---
 DiffUtil是support-v7:24.2.0中的新工具类，它用来比较两个数据集，寻找出旧数据集-》新数据集的最小变化量。
 说到数据集，相信大家知道它是和谁相关的了，就是我的最爱，RecyclerView。
 就我使用的这几天来看，它**最大的用处就是在RecyclerView刷新时**，不再无脑`mAdapter.notifyDataSetChanged()`。
