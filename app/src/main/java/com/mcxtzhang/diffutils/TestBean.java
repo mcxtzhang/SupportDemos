@@ -8,7 +8,7 @@ package com.mcxtzhang.diffutils;
  * 邮箱：zhangxutong@imcoming.com
  * 时间： 2016/9/12.
  */
-class TestBean implements Cloneable {
+public class TestBean implements Cloneable {
     private String name;
     private String desc;
     private int pic;
