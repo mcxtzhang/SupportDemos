@@ -1,4 +1,4 @@
-package com.mcxtzhang.diffutils;
+package com.mcxtzhang.diffutils.diffutil;
 
 /**
  * 介绍：一个普通的JavaBean，但是实现了clone方法，仅仅用于写Demo时，模拟刷新从网络获取数据用，

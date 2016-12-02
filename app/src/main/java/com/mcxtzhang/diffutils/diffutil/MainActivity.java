@@ -1,4 +1,4 @@
-package com.mcxtzhang.diffutils;
+package com.mcxtzhang.diffutils.diffutil;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +8,8 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.mcxtzhang.diffutils.R;
 
 import java.util.ArrayList;
 import java.util.List;

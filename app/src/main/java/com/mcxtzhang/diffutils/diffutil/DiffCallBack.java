@@ -1,4 +1,4 @@
-package com.mcxtzhang.diffutils;
+package com.mcxtzhang.diffutils.diffutil;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

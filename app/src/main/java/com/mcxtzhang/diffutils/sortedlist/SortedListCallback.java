@@ -3,8 +3,6 @@ package com.mcxtzhang.diffutils.sortedlist;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.util.SortedListAdapterCallback;
 
-import com.mcxtzhang.diffutils.TestBean;
-
 /**
  * 介绍：
  * 作者：zhangxutong

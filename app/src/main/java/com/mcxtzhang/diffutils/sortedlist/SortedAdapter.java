@@ -12,7 +12,10 @@ import android.widget.TextView;
 import com.mcxtzhang.diffutils.R;
 
 /**
- * 介绍：
+ * 介绍：Adapter要修改，
+ * 数据源都要从以前的ArrayList->替换为SortedList.
+ * 其他的话，倒没有太大变化，
+ * 因为SortedList虽然没有继承自List，但是暴漏出API还和List一样的。
  * 作者：zhangxutong
  * 邮箱：mcxtzhang@163.com
  * 主页：http://blog.csdn.net/zxt0601
@@ -21,11 +24,15 @@ import com.mcxtzhang.diffutils.R;
 
 public class SortedAdapter extends RecyclerView.Adapter<SortedAdapter.VH> {
     private final static String TAG = "zxt";
+    /**
+     * 数据源替换为SortedList，
+     * 以前可能会用ArrayList。
+     */
     private SortedList<TestSortBean> mDatas;
     private Context mContext;
     private LayoutInflater mInflater;
 
-    public SortedAdapter(Context mContext,SortedList<TestSortBean> mDatas) {
+    public SortedAdapter(Context mContext, SortedList<TestSortBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         mInflater = LayoutInflater.from(mContext);

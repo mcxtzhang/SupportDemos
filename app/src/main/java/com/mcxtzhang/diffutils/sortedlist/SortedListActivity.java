@@ -1,8 +1,6 @@
 package com.mcxtzhang.diffutils.sortedlist;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.util.SortedList;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,15 +9,17 @@ import android.view.View;
 
 import com.mcxtzhang.diffutils.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * SortedListDemo
+ */
 public class SortedListActivity extends AppCompatActivity {
-
+    /**
+     * 数据源替换为SortedList，
+     * 以前可能会用ArrayList。
+     */
     private SortedList<TestSortBean> mDatas;
     private RecyclerView mRv;
     private SortedAdapter mAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +28,25 @@ public class SortedListActivity extends AppCompatActivity {
 
         mRv = (RecyclerView) findViewById(R.id.rv);
         mRv.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new SortedAdapter(this, mDatas);
+        //★以前构建Adapter时，一般会将data也一起传入，现在有变化
+        mAdapter = new SortedAdapter(this, null);
         mRv.setAdapter(mAdapter);
 
 
         initData();
 
 
-        mDatas.beginBatchedUpdates();
+        //mDatas.beginBatchedUpdates();
         mAdapter.setDatas(mDatas);
-        mDatas.endBatchedUpdates();
+        //mDatas.endBatchedUpdates();
     }
 
     private void initData() {
+        //★SortedList初始化的时候，要将Adapter传进来。所以先构建Adapter，再构建SortedList
         mDatas = new SortedList<>(TestSortBean.class, new SortedListCallback(mAdapter));
         mDatas.add(new TestSortBean(10, "Android", R.drawable.pic1));
-        mDatas.add(new TestSortBean(10, "Android", R.drawable.pic1));
+        //★注意这里有一个重复的字段 会自动去重的。
+        mDatas.add(new TestSortBean(10, "Android重复", R.drawable.pic1));
         mDatas.add(new TestSortBean(2, "Java", R.drawable.pic2));
         mDatas.add(new TestSortBean(30, "背锅", R.drawable.pic3));
         mDatas.add(new TestSortBean(4, "手撕产品", R.drawable.pic4));
@@ -60,8 +63,9 @@ public class SortedListActivity extends AppCompatActivity {
         //add 内部会自动调用  mCallback.onInserted(index, 1); ->notifyItemRangeInserted(index,1);
         //也就是说我们add一次 它就刷新一次，没有batch操作，有点low
 
-        /*mDatas.add(new TestSortBean(26, "帅", R.drawable.pic6));//模拟新增数据
-        mDatas.add(new TestSortBean(27, "帅", R.drawable.pic6));//模拟新增数据*/
+        mDatas.add(new TestSortBean(26, "温油对待产品", R.drawable.pic6));//模拟新增
+        mDatas.add(new TestSortBean(12, "小马可以来点赞了", R.drawable.pic6));//模拟新增
+        mDatas.add(new TestSortBean(2, "Python", R.drawable.pic6));//add进去 重复的会自动修改
 
         // 如果想batch 就必须用addAll()操作，感觉这算一个限制。
         //addAll 也分两种
@@ -76,7 +80,9 @@ public class SortedListActivity extends AppCompatActivity {
 */
 
 
-        List<TestSortBean> newDatas = new ArrayList<>();
+        //刷新时，服务器给我们的一般都是一个List
+        //直接addAll 要先clear， 会闪屏
+/*        List<TestSortBean> newDatas = new ArrayList<>();
         for (int i = 0; i < mDatas.size(); i++) {
             try {
                 newDatas.add(mDatas.get(i).clone());//clone一遍旧数据 ，模拟刷新操作
@@ -91,40 +97,19 @@ public class SortedListActivity extends AppCompatActivity {
         newDatas.remove(testBean);
         newDatas.add(testBean);
         mDatas.clear();
-        mDatas.addAll(newDatas);
+        mDatas.addAll(newDatas);*/
 
 
-
-/*        new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                //每次add都会计算一次 放在子线程中
-                //放在子线程中计算
-                mDatas.add(new TestSortBean(26, "帅", R.drawable.pic6));//模拟新增数据
-                mDatas.get(0).setName("Android+");
-                mDatas.get(0).setIcon(R.drawable.pic7);//模拟修改数据
-                TestSortBean testBean = mDatas.get(1);//模拟数据位移
-                mDatas.remove(testBean);
-                mDatas.add(testBean);
-                Message message = mHandler.obtainMessage(H_CODE_UPDATE);
-                message.sendToTarget();
+                //每次add都会计算一次 想放在子线程中
+                //然而这是肯定不行的，上文提过，每次add 会自动 mAdapter.notifyItemRangeInserted(position, count);
+                //这一点就不如DiffUtil啦。
+                //android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+                /*mDatas.add(new TestSortBean(26, "帅", R.drawable.pic6));//模拟新增数据
+                mDatas.add(new TestSortBean(27, "帅", R.drawable.pic6));//模拟新增数据*/
             }
-        }).start();*/
-        //mAdapter.notifyDataSetChanged();//以前普通青年的我们只能这样，现在我们是文艺青年了，有新宠了
-
+        }).start();
     }
-
-    private static final int H_CODE_UPDATE = 1;
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case H_CODE_UPDATE:
-                    mDatas.beginBatchedUpdates();
-                    mAdapter.setDatas(mDatas);
-                    mDatas.endBatchedUpdates();
-                    break;
-            }
-        }
-    };
 }
