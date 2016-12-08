@@ -87,6 +87,33 @@ public class MainActivity extends AppCompatActivity {
                     DiffUtil.DiffResult diffResult = (DiffUtil.DiffResult) msg.obj;
                     //利用DiffUtil.DiffResult对象的dispatchUpdatesTo（）方法，传入RecyclerView的Adapter，轻松成为文艺青年
                     diffResult.dispatchUpdatesTo(mAdapter);
+
+                    //这种方法可以fix add 0 不滑动
+                    /*diffResult.dispatchUpdatesTo(new ListUpdateCallback() {
+                        @Override
+                        public void onInserted(int position, int count) {
+                            mAdapter.notifyItemRangeInserted(position, count);
+                            if (position==0){
+                                mRv.scrollToPosition(0);
+                            }
+                        }
+
+                        @Override
+                        public void onRemoved(int position, int count) {
+                            mAdapter.notifyItemRangeRemoved(position, count);
+                        }
+
+                        @Override
+                        public void onMoved(int fromPosition, int toPosition) {
+                            mAdapter.notifyItemMoved(fromPosition, toPosition);
+                        }
+
+                        @Override
+                        public void onChanged(int position, int count, Object payload) {
+                            mAdapter.notifyItemRangeChanged(position, count, payload);
+                        }
+                    });*/
+
                     //别忘了将新数据给Adapter
                     mDatas = mNewDatas;
                     mAdapter.setDatas(mDatas);
